@@ -1,0 +1,27 @@
+/**
+ * Absolute Background Cover from _helper
+ */
+.absolute-bg-360 {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+  z-Index: 100;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+  
+/* from _components */
+.mast__container-360 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    width: 90%;
+    margin: 0 auto;
+    z-Index: 110;
+  }
+
