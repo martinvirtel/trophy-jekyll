@@ -8,7 +8,7 @@ layout: default
       <i class="fa fa-lg fa-arrow-left"></i>
       <span>Back to Posts</span>
     </a>
-    <iframe class="absolute-bg" src="/app-files/index.html"></iframe>
+    <iframe class="absolute-bg" src="{{ site.baseurl }}/app-files/index.html"></iframe>
     <div class="mast__container">
       <span><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time></span>
       <h1 itemprop="name headline">{{ page.title }}</h1>
