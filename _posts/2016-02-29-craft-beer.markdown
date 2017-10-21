@@ -1,7 +1,7 @@
 ---
 layout: 360post
 title: "Craft Beer"
-date: 2016-02-19
+date: 2016-02-29
 categories:
   - Juice
 description: 
