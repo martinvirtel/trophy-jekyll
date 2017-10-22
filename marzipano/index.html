@@ -23,7 +23,7 @@
   </ul>
 </div>
 
-<div id="titleBar">
+<div id="titleBar" style="display: none">
   <h1 class="sceneName"></h1>
 </div>
 
@@ -60,6 +60,10 @@
 <a href="#" id="viewOut" class="viewControlButton viewControlButton-6">
   <img class="icon" src="img/minus.png">
 </a>
+<button id="copyScene" class="viewControlButton viewControlButton-7" data-clipboard-target="#scenedata">
+  <img class="icon" src="img/copy.png" >
+</button>
+<input type="text" id="scenedata" value="" >
 
 <script src="vendor/es5-shim.js"></script>
 <script src="vendor/eventShim.js"></script>
@@ -68,8 +72,8 @@
 <script src="vendor/screenfull.min.js" ></script>
 <script src="vendor/bowser.min.js" ></script>
 <script src="vendor/marzipano.js" ></script>
+<script src="vendor/clipboard.min.js" ></script>
 
-<script src="data.js"></script>
 <script src="index.js"></script>
 
 </body>

@@ -65,11 +65,12 @@ function run_marzipano(APP_DATA) {
   var scenes = APP_DATA.scenes.map(function(data) {
     var source = Marzipano.ImageUrlSource.fromString(
       "tiles/" + data.id + "/{z}/{f}/{y}/{x}.jpg",
-      { cubeMapPreviewUrl: "tiles/" + data.id + "/preview.jpg" });
+      { cubeMapPreviewUrl: "tiles/" + data.id + "/preview.jpg",
+        cubeMapPreviewFaceOrder: 'lfrbud' });
     var geometry = new Marzipano.CubeGeometry(data.levels);
 
-    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100*Math.PI/180, 120*Math.PI/180);
-    var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
+    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 180*Math.PI/180); /* , 30*Math.PI/180); */
+    var view = new Marzipano.RectilinearView(data.initialViewParameters); /*, limiter); */
 
     var scene = viewer.createScene({
       source: source,
@@ -122,6 +123,9 @@ function run_marzipano(APP_DATA) {
   // Set handler for scene switch.
   scenes.forEach(function(scene) {
     var el = document.querySelector('#sceneList .scene[data-id="' + scene.data.id + '"]');
+    if (el == null) {
+        el = document.querySelector('#sceneList .scene:first-child');
+    }
     el.addEventListener('click', function() {
       switchScene(scene);
       // On mobile, hide scene list after selecting a scene.
@@ -151,6 +155,22 @@ function run_marzipano(APP_DATA) {
   controls.registerMethod('rightElement', new Marzipano.ElementPressControlMethod(viewRightElement,  'x',  velocity, friction), true);
   controls.registerMethod('inElement',    new Marzipano.ElementPressControlMethod(viewInElement,  'zoom', -velocity, friction), true);
   controls.registerMethod('outElement',   new Marzipano.ElementPressControlMethod(viewOutElement, 'zoom',  velocity, friction), true);
+
+document.getElementById
+
+  if (APP_DATA.settings.viewControlButtons) {
+      var b=document.getElementsByTagName("body")[0];
+      b.classList.add("view-control-buttons");
+      var cl=new Clipboard("#copyScene");
+      setInterval(function()  {
+          var val="";
+          var sc=viewer.scene().view();
+          var raddeg=180/Math.PI
+          var val=Math.floor(sc.yaw()*raddeg)+":"+Math.floor(sc.pitch()*raddeg)+":"+Math.floor(sc.fov()*raddeg);
+          var b=document.getElementById("scenedata");
+          b.setAttribute("value",val);
+      },1000);
+  }
 
   function sanitize(s) {
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;');
@@ -369,6 +389,8 @@ function run_marzipano(APP_DATA) {
     return null;
   }
 
+  return viewer;
+
 };
 
 
@@ -407,7 +429,12 @@ function getUrlParameter(name) {
 
     var jsfile=getUrlParameter('data');
     loadScripts([jsfile], function() {
-        run_marzipano(window.APP_DATA);
+        var id=getUrlParameter('id');
+        if (id) {
+            console.log("ID set to "+id);
+            window.APP_DATA.scenes[0].id=id;
+        }
+        window.viewer=run_marzipano(window.APP_DATA);
     });
 
 
