@@ -163,18 +163,48 @@ document.getElementById
       b.classList.add("view-control-buttons");
       var cl=new Clipboard("#copyScene");
       setInterval(function()  {
-          var val="";
-          var sc=viewer.scene().view();
-          var raddeg=180/Math.PI
-          var val=Math.floor(sc.yaw()*raddeg)+":"+Math.floor(sc.pitch()*raddeg)+":"+Math.floor(sc.fov()*raddeg);
           var b=document.getElementById("scenedata");
-          b.setAttribute("value",val);
+          b.setAttribute("value",getCurrentView(viewer));
       },1000);
   }
 
   function sanitize(s) {
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;');
   }
+
+  function getCurrentView(viewer) {
+          var sc=viewer.scene().view();
+          var raddeg=180/Math.PI
+          var val=Math.floor(sc.yaw()*raddeg)+":"+Math.floor(sc.pitch()*raddeg)+":"+Math.floor(sc.fov()*raddeg);
+          return val;
+  }
+
+  function setCurrentView(viewer,pos,ttime) {
+      var sc = viewer.scene();
+      var view = pos.split(":")
+      var degrad=Math.PI/180;
+      var np= { yaw : parseInt(view[0])*degrad,
+                pitch : parseInt(view[1])*degrad,
+                fov : parseInt(view[2])*degrad };
+      if (typeof ttime == "undefined") {
+          if (view.length == 4) {
+              ttime=parseInt(view[3]);
+          } else {
+              ttime=1000;
+          }
+      }
+      sc.lookTo(np,{transitionDuration: ttime});
+  }
+
+  window.setCurrentView=setCurrentView;
+
+  window.onhashchange = function () {
+      var g=location.hash.substring(1);
+      if (g.length>5) {
+          setCurrentView(viewer,g);
+      }
+  }
+
 
   function switchScene(scene) {
     stopAutorotate();
@@ -418,12 +448,17 @@ function loadScripts(array,callback){
 
 /* https://davidwalsh.name/query-string-javascript */
 
-function getUrlParameter(name) {
+function getUrlParameter(name,part) {
+    if (typeof part == "undefined") {
+        part=location.search;
+    }
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     var results = regex.exec(location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
+
+
 
 (function() {
 
