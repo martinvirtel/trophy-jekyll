@@ -20,7 +20,7 @@ social:
   github: 
 
 # Build settings
-exclude: ["_screenshots", "Gemfile", "Gemfile.lock", "LICENSE.txt", "README.md"]
+exclude: ["_screenshots", "Gemfile", "Gemfile.lock", "LICENSE.txt", "README.md", "source", "Makefile"  ]
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
 
@@ -30,3 +30,10 @@ sass:
 
 # Gems
 gems: [jekyll-paginate, jekyll-sitemap, octopress-autoprefixer]
+
+
+keep_files: [ "marzipano/tiles" ]
+
+# Deploy
+
+host: 0.0.0.0

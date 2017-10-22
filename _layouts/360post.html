@@ -8,7 +8,7 @@ layout: default
       <i class="fa fa-lg fa-arrow-left"></i>
       <span>Back to Posts</span>
     </a>
-    <iframe class="absolute-bg-360" src="{{ site.baseurl }}/marzipano/index.html?id={{ page.panorama }}"></iframe>
+    <iframe class="absolute-bg-360" src="{{ site.baseurl }}/marzipano/index.html?data=data-test1.js&id={{ page.panorama }}"></iframe>
     <div class="mast__container-360">
       <span><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time></span>
       <h1 itemprop="name headline">{{ page.title }}</h1>
